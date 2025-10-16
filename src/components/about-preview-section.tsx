@@ -7,30 +7,21 @@ import { useEffect, useRef, useState } from "react"
 import { useParams } from 'next/navigation'
 import { useTranslations } from '@/config/i18n/t'
 import type { Locale } from '@/config/i18n/i18n'
+import { useAppDispatch, useAppSelector } from "@/store/hooks"
+import { fetchCompanyProfile } from "@/store/aboutSlice"
 
 export function AboutPreviewSection() {
-  const [isVisible, setIsVisible] = useState(false)
-  const sectionRef = useRef<HTMLElement>(null)
   const params = useParams()
   const lang = (params?.lang || 'uz') as Locale
   const { t } = useTranslations(lang)
+  const about=useAppSelector(state=>state.about)
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold: 0.2 },
-    )
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
+    if (!about?.raw && !about?.loading) {
+      dispatch(fetchCompanyProfile())
     }
-
-    return () => observer.disconnect()
-  }, [])
+  }, [dispatch, about?.raw, about?.loading])
 
   const highlights = [
     {
@@ -46,17 +37,17 @@ export function AboutPreviewSection() {
     {
       icon: Globe,
       title: 'about',
-      description: 'addressShort',
+      description: about?.data?.title || t('footerLocation'),
     },
   ]
 
   return (
-    <section ref={sectionRef} className="py-24 bg-secondary/20">
+    <section  className="py-24 bg-secondary/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div
             className={`space-y-6 transition-all duration-700 ${
-              isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
+               "opacity-100 translate-x-0" 
             }`}
           >
             <div className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-semibold">
@@ -69,7 +60,7 @@ export function AboutPreviewSection() {
               {t('aboutText')}
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              {t('companyStructureDescription2')}
+              {about?.data?.title || t('aboutPreviewDescription')}
             </p>
             <Link href={`/${lang}/about` as any}>
               <Button size="lg" className="gap-2 group">
@@ -81,7 +72,7 @@ export function AboutPreviewSection() {
 
           <div
             className={`grid gap-6 transition-all duration-700 delay-300 ${
-              isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+              "opacity-100 translate-x-0" 
             }`}
           >
             {highlights.map((item, index) => (
@@ -94,8 +85,8 @@ export function AboutPreviewSection() {
                   <item.icon className="h-6 w-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                  <p className="text-muted-foreground">{item.description}</p>
+                  <h3 className="text-xl font-semibold mb-2">{t(item.title)}</h3>
+                  <p className="text-muted-foreground">{t(item.description)}</p>
                 </div>
               </div>
             ))}

@@ -2,18 +2,13 @@
 
 import React from 'react'
 import { Loader } from './ui/loader'
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import {  useAppSelector } from '@/store/hooks'
 import { fetchCompanyProfile } from '@/store/aboutSlice'
 
 export default function AboutProfile() {
-  const dispatch = useAppDispatch()
   const about = useAppSelector((s: any) => s.about)
 
-  React.useEffect(() => {
-    if (!about?.raw && !about?.loading) {
-      dispatch(fetchCompanyProfile())
-    }
-  }, [dispatch, about?.raw, about?.loading])
+
 
   if (about?.loading) return <Loader full />
   if (about?.error) return <div className="py-8">Failed to load company profile: {String(about.error)}</div>
