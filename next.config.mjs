@@ -1,14 +1,42 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  images: {
-    unoptimized: true,
-  },
-}
+  basePath: process.env.BASEPATH,
+  reactStrictMode: false,
+  experimental: { typedRoutes: true },
 
-export default nextConfig
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/ru',
+        permanent: true,
+      }
+    ];
+  },
+
+ images: {
+  remotePatterns: [
+    // Local development backend
+    {
+      protocol: 'http',
+      hostname: 'localhost',
+      port: '4000',
+      pathname: '/uploads/**',
+    },
+    // Production API (allow both http and https for flexibility)
+    {
+      protocol: 'http',
+      hostname: 'api.bmsq.uz',
+      pathname: '/uploads/**',
+    },
+    {
+      protocol: 'https',
+      hostname: 'api.bmsq.uz',
+      pathname: '/uploads/**',
+    },
+  ],
+},
+
+};
+
+export default nextConfig;

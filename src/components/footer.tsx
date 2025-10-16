@@ -1,7 +1,15 @@
+"use client"
+
 import Link from "next/link"
 import { Mail, Phone, MapPin } from "lucide-react"
+import { useParams } from 'next/navigation'
+import { useTranslations } from '@/config/i18n/t'
+import type { Locale } from '@/config/i18n/i18n'
 
 export function Footer() {
+  const params = useParams()
+  const lang = (params?.lang || 'uz') as Locale
+  const { t } = useTranslations(lang)
   return (
     <footer className="bg-card border-t border-border py-12">
       <div className="container mx-auto px-4">
@@ -9,7 +17,7 @@ export function Footer() {
           <div>
             <h3 className="text-xl font-bold text-primary mb-4">Optivora</h3>
             <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-              Powering Uzbekistan's energy infrastructure with advanced technical solutions.
+              {t('footerAbout')}
             </p>
             <div className="space-y-2 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
@@ -28,7 +36,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4">Solutions</h4>
+            <h4 className="font-semibold mb-4">{t('services')}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <Link href="/solutions#equipment" className="hover:text-primary transition-colors">
@@ -54,7 +62,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4">Industries</h4>
+            <h4 className="font-semibold mb-4">{t('productsTitle')}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <Link href="/solutions#power" className="hover:text-primary transition-colors">
@@ -80,39 +88,39 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4">Company</h4>
+            <h4 className="font-semibold mb-4">{t('about')}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href="/about" className="hover:text-primary transition-colors">
-                  About Us
+                <Link href={`/${lang}/about` as any} className="hover:text-primary transition-colors">
+                  {t('about')}
                 </Link>
               </li>
               <li>
-                <Link href="/projects" className="hover:text-primary transition-colors">
-                  Our Projects
+                <Link href={`/${lang}/projects` as any} className="hover:text-primary transition-colors">
+                  {t('projectsHeading')}
                 </Link>
               </li>
               <li>
-                <Link href="/partners" className="hover:text-primary transition-colors">
-                  Our Partners
+                <Link href={`/${lang}/partners` as any} className="hover:text-primary transition-colors">
+                  {t('partners')}
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="hover:text-primary transition-colors">
-                  FAQ
+                <Link href={`/${lang}/faq` as any} className="hover:text-primary transition-colors">
+                  {t('navigation.faq')}
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-primary transition-colors">
-                  Contact
+                <Link href={`/${lang}/contact` as any} className="hover:text-primary transition-colors">
+                  {t('contact')}
                 </Link>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground">
-          <p>© 2025 Optivora. All rights reserved. | Tashkent, Uzbekistan</p>
+          <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground">
+          <p>© 2025 Optivora. {t('rightsReserved')} | {t('addressShort')}</p>
         </div>
       </div>
     </footer>

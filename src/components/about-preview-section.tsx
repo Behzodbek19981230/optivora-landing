@@ -4,10 +4,16 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, Award, Users, Globe } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
+import { useParams } from 'next/navigation'
+import { useTranslations } from '@/config/i18n/t'
+import type { Locale } from '@/config/i18n/i18n'
 
 export function AboutPreviewSection() {
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
+  const params = useParams()
+  const lang = (params?.lang || 'uz') as Locale
+  const { t } = useTranslations(lang)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -29,18 +35,18 @@ export function AboutPreviewSection() {
   const highlights = [
     {
       icon: Award,
-      title: "Industry Expertise",
-      description: "Decades of experience in energy infrastructure",
+      title: 'experience',
+      description: 'aboutText',
     },
     {
       icon: Users,
-      title: "Trusted Partner",
-      description: "Working with leading manufacturers worldwide",
+      title: 'partnership',
+      description: 'suppliersSubtitle',
     },
     {
       icon: Globe,
-      title: "Local Presence",
-      description: "Deep understanding of Uzbekistan market",
+      title: 'about',
+      description: 'addressShort',
     },
   ]
 
@@ -54,23 +60,20 @@ export function AboutPreviewSection() {
             }`}
           >
             <div className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-semibold">
-              About Optivora
+              {t('about')}
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-balance">
-              Your Trusted Partner in Energy Infrastructure
+              {t('aboutTitle')}
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Optivora is a leading supplier of specialized equipment and technical solutions for Uzbekistan's energy,
-              water, and industrial sectors. We bridge the gap between world-class manufacturers and local projects,
-              ensuring reliable delivery and expert support.
+              {t('aboutText')}
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Our team combines deep technical knowledge with local market expertise to deliver solutions that meet the
-              unique requirements of Central Asian infrastructure projects.
+              {t('companyStructureDescription2')}
             </p>
-            <Link href="/about">
+            <Link href={`/${lang}/about` as any}>
               <Button size="lg" className="gap-2 group">
-                Learn More About Us
+                {t('learnMore')}
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>

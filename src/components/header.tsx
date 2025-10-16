@@ -3,12 +3,19 @@
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 import { useState, useEffect } from "react"
+import { useParams } from 'next/navigation'
+import { useTranslations } from '@/config/i18n/t'
+import type { Locale } from '@/config/i18n/i18n'
 import Link from "next/link"
 import Image from "next/image"
+import { LanguageSelector } from '@/components/LanguageSelector'
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const params = useParams()
+  const lang = (params?.lang || 'uz') as Locale
+  const { t } = useTranslations(lang)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,6 +24,7 @@ export function Header() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
 
   return (
     <header
@@ -30,50 +38,49 @@ export function Header() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center gap-2">
-              <Image src="/optivora-logo.jpg" alt="Optivora" width={120} height={40} className="h-10 w-auto" />
+              <Image src="/logo.svg" alt="Optivora" width={120} height={40} className="h-10 w-auto" />
             </Link>
             <nav className="hidden lg:flex items-center gap-6">
-              <Link href="/" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-                Home
+              <Link href={`/${lang}` as any} className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+                {t('home')}
               </Link>
-              <Link href="/about" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-                About Us
-              </Link>
-              <Link
-                href="/solutions"
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-              >
-                Solutions & Services
+              <Link href={`/${lang}/about` as any} className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+                {t('about')}
               </Link>
               <Link
-                href="/projects"
+                href={`/${lang}/solutions` as any}
                 className="text-sm font-medium text-foreground hover:text-primary transition-colors"
               >
-                Projects & Experience
+                {t('services')}
               </Link>
               <Link
-                href="/partners"
+                href={`/${lang}/projects` as any}
                 className="text-sm font-medium text-foreground hover:text-primary transition-colors"
               >
-                Partners
+                {t('projectsHeading')}
               </Link>
               <Link
-                href="/contact"
+                href={`/${lang}/partners` as any}
                 className="text-sm font-medium text-foreground hover:text-primary transition-colors"
               >
-                Contact
+                {t('partners')}
               </Link>
-              <Link href="/faq" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-                FAQ
+              <Link
+                href={`/${lang}/contact` as any}
+                className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+              >
+                {t('contact')}
+              </Link>
+              <Link href={`/${lang}/faq` as any} className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+                {t('navigation.faq')}
               </Link>
             </nav>
           </div>
           <div className="flex items-center gap-4">
-            <Link href="/contact">
-              <Button variant="default" className="hidden md:inline-flex bg-primary hover:bg-primary/90">
-                Request Consultation
-              </Button>
-            </Link>
+            <div className="hidden md:block">
+              <LanguageSelector />
+            </div>
+          
             <Button
               variant="ghost"
               size="icon"
@@ -136,6 +143,9 @@ export function Header() {
             >
               FAQ
             </Link>
+            <div className="pt-2 border-t border-border mt-2">
+              <LanguageSelector />
+            </div>
           </nav>
         )}
       </div>

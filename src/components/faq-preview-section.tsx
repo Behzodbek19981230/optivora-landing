@@ -5,10 +5,16 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
+import { useParams } from 'next/navigation'
+import { useTranslations } from '@/config/i18n/t'
+import type { Locale } from '@/config/i18n/i18n'
 
 export function FaqPreviewSection() {
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
+  const params = useParams()
+  const lang = (params?.lang || 'uz') as Locale
+  const { t } = useTranslations(lang)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -28,26 +34,10 @@ export function FaqPreviewSection() {
   }, [])
 
   const faqs = [
-    {
-      question: "What types of equipment does Optivora supply?",
-      answer:
-        "We supply a comprehensive range of equipment including control systems, instrumentation, rotating equipment (pumps, compressors), electrical systems, water treatment solutions, and HVAC systems for energy and industrial facilities.",
-    },
-    {
-      question: "Do you provide technical support and after-sales service?",
-      answer:
-        "Yes, we provide comprehensive technical support including installation guidance, commissioning assistance, training, and ongoing maintenance support. Our local team ensures fast response times.",
-    },
-    {
-      question: "What is your typical delivery timeline?",
-      answer:
-        "Delivery timelines vary based on equipment type and manufacturer. Standard items typically take 4-8 weeks, while specialized equipment may require 12-16 weeks. We work closely with clients to meet project schedules.",
-    },
-    {
-      question: "Can you help with equipment selection and specifications?",
-      answer:
-        "Absolutely. Our technical team can assist with equipment selection, specification development, and ensuring compatibility with existing systems. We leverage our manufacturer relationships to find the best solutions.",
-    },
+    { key: 'faq.q1' },
+    { key: 'faq.q2' },
+    { key: 'faq.q3' },
+    { key: 'faq.q4' },
   ]
 
   return (
@@ -59,12 +49,10 @@ export function FaqPreviewSection() {
           }`}
         >
           <div className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-semibold mb-4">
-            FAQ
+            {t('navigation.news')}
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-balance">Frequently Asked Questions</h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            Quick answers to common questions about our services
-          </p>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-balance">{t('newsHeading')}</h2>
+          <p className="text-lg text-muted-foreground leading-relaxed">{t('newsIntro')}</p>
         </div>
 
         <div
@@ -76,9 +64,9 @@ export function FaqPreviewSection() {
             {faqs.map((faq, index) => (
               <AccordionItem key={index} value={`item-${index}`} className="border-2 rounded-lg px-6 bg-card">
                 <AccordionTrigger className="text-left hover:no-underline py-4">
-                  <span className="font-semibold">{faq.question}</span>
+                  <span className="font-semibold">{t(`${faq.key}.question`)}</span>
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground leading-relaxed pb-4">{faq.answer}</AccordionContent>
+                <AccordionContent className="text-muted-foreground leading-relaxed pb-4">{t(`${faq.key}.answer`)}</AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
