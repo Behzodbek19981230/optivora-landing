@@ -49,7 +49,7 @@ export function FaqPreviewSection() {
           }`}
         >
           <div className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-semibold mb-4">
-            {t('navigation.news')}
+            {t('navigation.faq')}
           </div>
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-balance">{t('newsHeading')}</h2>
           <p className="text-lg text-muted-foreground leading-relaxed">{t('newsIntro')}</p>
@@ -73,9 +73,9 @@ export function FaqPreviewSection() {
         </div>
 
         <div className="text-center">
-          <Link href="/faq">
+          <Link href={`/${lang}/faq` as any}>
             <Button size="lg" variant="outline" className="gap-2 group bg-transparent">
-              View All FAQs
+              {t('viewAllFaqs')}
               <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>

@@ -30,8 +30,8 @@ export function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white backdrop-blur-md border-b border-border shadow-md"
-          : "bg-white/95 backdrop-blur-sm shadow-sm"
+          ? "bg-background/95 backdrop-blur-md border-b border-border shadow-md"
+          : "bg-background/90 backdrop-blur-sm shadow-sm"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -95,53 +95,53 @@ export function Header() {
         {isMobileMenuOpen && (
           <nav className="lg:hidden mt-4 pb-4 space-y-3 animate-in fade-in slide-in-from-top-2 duration-300">
             <Link
-              href="/"
+              href={`/${lang}` as any}
               className="block text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Home
+              {t('home')}
             </Link>
             <Link
-              href="/about"
+              href={`/${lang}/about` as any}
               className="block text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              About Us
+              {t('about')}
             </Link>
             <Link
-              href="/solutions"
+              href={`/${lang}/solutions` as any}
               className="block text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Solutions & Services
+              {t('services')}
             </Link>
             <Link
-              href="/projects"
+              href={`/${lang}/projects` as any}
               className="block text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Projects & Experience
+              {t('projectsHeading')}
             </Link>
             <Link
-              href="/partners"
+              href={`/${lang}/partners` as any}
               className="block text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Partners
+              {t('partners')}
             </Link>
             <Link
-              href="/contact"
+              href={`/${lang}/contact` as any}
               className="block text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Contact
+              {t('contact')}
             </Link>
             <Link
-              href="/faq"
+              href={`/${lang}/faq` as any}
               className="block text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              FAQ
+              {t('navigation.faq')}
             </Link>
             <div className="pt-2 border-t border-border mt-2">
               <LanguageSelector />

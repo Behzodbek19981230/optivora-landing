@@ -4,9 +4,15 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ChevronDown } from "lucide-react"
 import { useState } from "react"
+import { useParams } from 'next/navigation'
+import { useTranslations } from '@/config/i18n/t'
+import type { Locale } from '@/config/i18n/i18n'
 
 export default function FAQPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
+  const params = useParams()
+  const lang = (params?.lang || 'uz') as Locale
+  const { t } = useTranslations(lang)
 
   const faqs = [
     {
@@ -69,9 +75,9 @@ export default function FAQPage() {
       <section className="pt-32 pb-16 bg-gradient-to-br from-primary/10 via-accent/5 to-background">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-balance">Frequently Asked Questions</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-balance">{t('navigation.faq')}</h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Find answers to common questions about our equipment supply and technical services
+              {t('haveQuestions')}
             </p>
           </div>
         </div>
@@ -110,16 +116,15 @@ export default function FAQPage() {
       {/* Still Have Questions CTA */}
       <section className="py-16 bg-muted/30">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Still Have Questions?</h2>
+          <h2 className="text-3xl font-bold mb-4">{t('haveQuestions')}</h2>
           <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Our team is ready to help with any inquiries about equipment supply, technical specifications, or project
-            requirements.
+            {t('contactForConsultation')}
           </p>
           <a
-            href="/contact"
+            href={`/${lang}/contact`}
             className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors"
           >
-            Contact Us
+            {t('contactAction')}
           </a>
         </div>
       </section>
