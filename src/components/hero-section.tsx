@@ -72,16 +72,14 @@ export function HeroSection() {
               fill
               className="object-cover"
               priority={index === 0}
-              style={{ opacity: 0.3 }}
             />
-            {/* Make gradient overlay more transparent */}
-            <div className="absolute inset-0 bg-[image:var(--gradient-hero)] opacity-60" />
+            <div className="absolute inset-0 bg-[image:var(--gradient-hero)] opacity-95" />
           </div>
         ))}
       </div>
 
       {/* Animated background pattern overlay */}
-      <div className="absolute inset-0 opacity-5 z-[1]">
+      <div className="absolute inset-0 opacity-10 z-[1]">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent_50%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
       </div>
