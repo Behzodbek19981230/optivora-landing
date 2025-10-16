@@ -42,7 +42,7 @@ export function LanguageSelector() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" className="gap-2 smooth-transition hover:hero-gradient hover:text-primary-foreground">
+        <Button variant="outline" size="sm" className="gap-2 smooth-transition bg-[image:var(--gradient-primary)]  text-primary-foreground">
           <Globe className="h-4 w-4" />
           <span className="hidden sm:inline">{currentLang.flag} {currentLang.name}</span>
           <span className="sm:hidden">{currentLang.flag}</span>
