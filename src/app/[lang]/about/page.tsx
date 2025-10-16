@@ -1,7 +1,7 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Building2, Target, Award, Users } from "lucide-react"
-import { AboutProfile } from '@/components/about-profile'
+import AboutProfile from '@/components/about-profile'
 
 export default function AboutPage() {
   return (
