@@ -21,12 +21,12 @@ export default function Home() {
       <AboutPreviewSection />
       <StatsSection />
       <ServicesSection />
-      <SolutionsPreviewSection />
-      <IndustriesSection />
+      {/* <SolutionsPreviewSection /> */}
+      {/* <IndustriesSection /> */}
       <ProjectsSection />
       <PartnersSection />
-      <WhyChooseSection />
-      <TestimonialsSection />
+      {/* <WhyChooseSection /> */}
+      {/* <TestimonialsSection /> */}
       <FaqPreviewSection />
       <ContactSection />
       <Footer />

@@ -38,17 +38,17 @@ export function Header() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center gap-2">
-              <Image src="/logo.svg" alt="Optivora" width={120} height={40} className="h-10 w-auto" />
+              <Image src="/logo.svg" alt="Optivora" width={120} height={40} className="h-10 w-auto " />
             </Link>
             <nav className="hidden lg:flex items-center gap-6">
               <Link href={`/${lang}` as any} className="text-sm font-medium text-foreground hover:text-primary transition-colors">
                 {t('home')}
               </Link>
-              <Link href={`/${lang}/about` as any} className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+              <Link href="#about" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
                 {t('about')}
               </Link>
               <Link
-                href={`/${lang}/solutions` as any}
+                href={"#services"}
                 className="text-sm font-medium text-foreground hover:text-primary transition-colors"
               >
                 {t('services')}
@@ -60,18 +60,18 @@ export function Header() {
                 {t('projectsHeading')}
               </Link>
               <Link
-                href={`/${lang}/partners` as any}
+                href={'#partners'}
                 className="text-sm font-medium text-foreground hover:text-primary transition-colors"
               >
                 {t('partners')}
               </Link>
               <Link
-                href={`/${lang}/contact` as any}
+                href={"#contact"}
                 className="text-sm font-medium text-foreground hover:text-primary transition-colors"
               >
                 {t('contact')}
               </Link>
-              <Link href={`/${lang}/faq` as any} className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+              <Link href="#faq" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
                 {t('navigation.faq')}
               </Link>
             </nav>

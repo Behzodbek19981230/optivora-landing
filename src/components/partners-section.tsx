@@ -1,80 +1,112 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+
+import { Locale } from "@/config/i18n/i18n"
+import { getTranslation } from "@/config/i18n/t"
+import { PartnerService } from "@/lib/api"
+import { Partner } from "@/types/partner"
+import { useParams } from "next/navigation"
+import useSWR from "swr"
+import { OptimizedImage } from "@/components/OptimizedImage"
+import { useCallback, useEffect, useState } from 'react'
+import useEmblaCarousel from 'embla-carousel-react'
+import {ChevronLeft, ChevronRight} from "lucide-react";
+
 
 export function PartnersSection() {
-  const [isVisible, setIsVisible] = useState(false)
-  const sectionRef = useRef<HTMLElement>(null)
+  const { lang } = useParams()
+  const { t } = getTranslation((lang as Locale) || 'uz')
+  const { data, isLoading } = useSWR('/api/partners', PartnerService)
 
-  const partners = [
-    { name: "Statron", country: "Germany", category: "Power Electronics" },
-    { name: "Hyundai Electric", country: "South Korea", category: "Automation" },
-    { name: "Yaskawa Electric", country: "Japan", category: "Drives & Motion" },
-    { name: "Shin-Shin", country: "Japan", category: "Industrial Pumps" },
-    { name: "Torishima", country: "Japan", category: "High-Performance Pumps" },
-    { name: "KSB", country: "Germany", category: "Pumps & Valves" },
-    { name: "Hanwha Power", country: "South Korea", category: "Power Generation" },
-    { name: "Hansen", country: "Denmark", category: "Sealing Solutions" },
-    { name: "Ingersoll Rand", country: "USA", category: "Compression Systems" },
-    { name: "Minimax", country: "Germany", category: "Fire Safety" },
-    { name: "Welland & Tuxhorn", country: "Germany", category: "Control Valves" },
-    { name: "Hyosung", country: "South Korea", category: "Power Equipment" },
-  ]
+  // ensure hooks run in stable order
+  const partners = (data?.results || []) as Partner[]
 
+  // Embla carousel: single-row slider with all partners as slides
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: 'start', containScroll: 'trimSnaps' })
+  const [canScrollPrev, setCanScrollPrev] = useState(false)
+  const [canScrollNext, setCanScrollNext] = useState(false)
+
+  const [paused, setPaused] = useState(false)
+  // update controls state when embla changes
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold: 0.2 },
-    )
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
+    if (!emblaApi) return
+    const onSelect = () => {
+      setCanScrollPrev(emblaApi.canScrollPrev())
+      setCanScrollNext(emblaApi.canScrollNext())
     }
+    emblaApi.on('select', onSelect)
+    onSelect()
+    return () => {
+      emblaApi.off('select', onSelect)
+    }
+  }, [emblaApi])
 
-    return () => observer.disconnect()
-  }, [])
+  // autoplay
+  useEffect(() => {
+    if (!emblaApi) return
+    if (partners.length <= 1) return
+    const id = setInterval(() => {
+      if (emblaApi.canScrollNext()) emblaApi.scrollNext()
+      if (emblaApi.canScrollNext() && !paused) emblaApi.scrollNext()
+    }, 4000)
+    return () => clearInterval(id)
+  }, [emblaApi, partners.length, paused])
+  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi])
+  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi])
+
+  // early returns (after hooks)
+  if (isLoading) return <div className="py-12 text-center">{t('states.loading') || 'Loading...'}</div>
+  if (!partners.length) return <div className="py-12 text-center">{t('partners.noData') || 'No partners available'}</div>
 
   return (
-    <section id="partners" ref={sectionRef} className="py-24 bg-muted/30">
+    <section id="partners" className="py-24 bg-muted/30">
       <div className="container mx-auto px-4">
-        <div
-          className={`text-center max-w-3xl mx-auto mb-16 transition-all duration-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}
-        >
+        <div className={`text-center max-w-3xl mx-auto mb-16 transition-all duration-700 ${"opacity-100 translate-y-0"}`}>
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-balance">
-            World-Class Equipment from Trusted Manufacturers
+            {t('partners.title') || 'World-Class Equipment from Trusted Manufacturers'}
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Authorized representation of leading global technology providers
+            {t('partners.subtitle') || 'Authorized representation of leading global technology providers'}
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {partners.map((partner, index) => (
-            <div
-              key={index}
-              className={`bg-card border border-border rounded-xl p-6 hover:shadow-lg hover:border-primary transition-all duration-300 hover:-translate-y-1 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-              }`}
-              style={{ transitionDelay: `${index * 50}ms` }}
-            >
-              <div className="text-center space-y-2">
-                <h3 className="font-bold text-lg">{partner.name}</h3>
-                <p className="text-sm text-muted-foreground">{partner.country}</p>
-                <p className="text-xs text-primary font-medium">{partner.category}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+        <div className="relative">
+          {/* Embla viewport */}
+          <div className="overflow-hidden" ref={emblaRef} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+            <div className="flex gap-6 items-stretch">
+              {partners.map((partner) => (
+                <div key={partner.id} className="flex-none w-40 sm:w-44 md:w-52 lg:w-64">
+                  <div className="h-full bg-card  rounded-xl p-0  hover:shadow-lg hover:border-primary transition-all duration-300 hover:-translate-y-1 flex flex-col items-center justify-start">
+                    <a href={partner.website} target="_blank" rel="noopener noreferrer" >
+                      <OptimizedImage src={partner.logo} alt={partner.name} className="object-cover rounded-xl w-full h-full" />
+                    </a>
 
-        <div className="text-center mt-12">
-          <p className="text-muted-foreground mb-4">And many more international partners</p>
-        </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Controls */}
+          <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex space-x-2">
+            <button
+              onClick={scrollPrev}
+              aria-label="Previous"
+              className="inline-flex items-center justify-center p-2 rounded-full bg-white/90 shadow hover:bg-white disabled:opacity-40"
+                disabled={!canScrollPrev}>
+
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              disabled={!canScrollNext}
+              aria-label="Next"
+              className="inline-flex items-center justify-center p-2 rounded-full bg-white/90 shadow hover:bg-white disabled:opacity-40"
+              onClick={scrollNext}
+                >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
+          </div>
       </div>
     </section>
   )

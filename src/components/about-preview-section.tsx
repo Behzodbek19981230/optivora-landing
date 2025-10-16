@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Award, Users, Globe } from "lucide-react"
+import { ArrowRight, Award, Users, Globe, Building2, Target } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import { useParams } from 'next/navigation'
@@ -9,6 +9,7 @@ import { useTranslations } from '@/config/i18n/t'
 import type { Locale } from '@/config/i18n/i18n'
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { fetchCompanyProfile } from "@/store/aboutSlice"
+import AboutProfile from "./about-profile"
 
 export function AboutPreviewSection() {
   const params = useParams()
@@ -42,57 +43,67 @@ export function AboutPreviewSection() {
   ]
 
   return (
-    <section  className="py-24 bg-secondary/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div
-            className={`space-y-6 transition-all duration-700 ${
-               "opacity-100 translate-x-0" 
-            }`}
-          >
-            <div className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-semibold">
-              {t('about')}
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-balance">
-              {t('aboutTitle')}
-            </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              {t('aboutText')}
-            </p>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              {about?.data?.title || t('aboutPreviewDescription')}
-            </p>
-            <Link href={`/${lang}/about` as any}>
-              <Button size="lg" className="gap-2 group">
-                {t('learnMore')}
-                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
-          </div>
+    <section id="about" className="py-24 bg-secondary/20">
+      <AboutProfile />
 
-          <div
-            className={`grid gap-6 transition-all duration-700 delay-300 ${
-              "opacity-100 translate-x-0" 
-            }`}
-          >
-            {highlights.map((item, index) => (
-              <div
-                key={index}
-                className="flex gap-4 p-6 bg-card rounded-xl border-2 hover:border-primary transition-all duration-300 hover:shadow-lg"
-                style={{ transitionDelay: `${index * 100}ms` }}
-              >
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <item.icon className="h-6 w-6 text-primary" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold mb-2">{t(item.title)}</h3>
-                  <p className="text-muted-foreground">{t(item.description)}</p>
-                </div>
-              </div>
-            ))}
+      {/* Mission & Vision */}
+      <section className="py-16 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-card p-8 rounded-lg border border-border">
+              <Target className="h-12 w-12 text-primary mb-4" />
+              <h3 className="text-2xl font-bold mb-4">{t('about.mission.title')}</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                {t('about.mission.text')}
+              </p>
+            </div>
+            <div className="bg-card p-8 rounded-lg border border-border">
+              <Award className="h-12 w-12 text-primary mb-4" />
+              <h3 className="text-2xl font-bold mb-4">{t('about.vision.title')}</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                {t('about.vision.text')}
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Core Values */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">{t('about.coreValues.title')}</h2>
+          <div className="grid md:grid-cols-4 gap-6">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Building2 className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="font-semibold mb-2">{t('about.coreValues.quality.title')}</h3>
+              <p className="text-sm text-muted-foreground">{t('about.coreValues.quality.text')}</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="font-semibold mb-2">{t('about.coreValues.expertise.title')}</h3>
+              <p className="text-sm text-muted-foreground">{t('about.coreValues.expertise.text')}</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Target className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="font-semibold mb-2">{t('about.coreValues.reliability.title')}</h3>
+              <p className="text-sm text-muted-foreground">{t('about.coreValues.reliability.text')}</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Award className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="font-semibold mb-2">{t('about.coreValues.partnership.title')}</h3>
+              <p className="text-sm text-muted-foreground">{t('about.coreValues.partnership.text')}</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </section>
   )
 }

@@ -49,3 +49,13 @@ export const CompanyProfileService = async () => {
 	const response = await request.get('/company-profile/public');
 	return response.data;
 };
+
+export const ServiceOursService = async () => {
+    const response = await request.get('/service/public');
+    return response.data;
+}
+
+export const PartnerService = async () => {
+    const response = await request.get('/partner/public');
+    return response.data;
+}
