@@ -43,7 +43,7 @@ export function Header() {
                             <Link href={`/${lang}`} className="text-sm font-medium text-foreground hover:text-primary transition-colors">
                                 {t('home')}
                             </Link>
-                            <Link href={`/${lang}/about`} className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+                            <Link href={`#about`} className="text-sm font-medium text-foreground hover:text-primary transition-colors">
                                 {t('about')}
                             </Link>
                             <Link href="#industries" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
@@ -94,7 +94,7 @@ export function Header() {
                             {t('home')}
                         </Link>
                         <Link
-                            href={`/${lang}/about`}
+                            href={`#about`}
                             className="block text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
                             onClick={() => setIsMobileMenuOpen(false)}
                         >
