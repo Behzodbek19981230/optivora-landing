@@ -54,7 +54,7 @@ export function Header() {
                 {t('services')}
               </Link>
               <Link
-                href={`/${lang}/projects` as any}
+                href={'#projects'}
                 className="text-sm font-medium text-foreground hover:text-primary transition-colors"
               >
                 {t('projectsHeading')}

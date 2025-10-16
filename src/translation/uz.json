@@ -1,4 +1,9 @@
-{
+
+{	"projects.keyDeliverables": "Asosiy yetkazib berishlar",
+	"projects.description": "Tavsif",
+	"projects.partners": "Hamkorlar",
+	"projects.industries": "Sohalar",
+	"projects.categories": "Kategoriyalar",
 	"hero.title": "Zamonaviy suv taʼminoti yechimlari",
 	"hero.subtitle": "Muhandislik, qurilish va xizmat ko‘rsatish",
 	"services.title": "Xizmatlarimiz",

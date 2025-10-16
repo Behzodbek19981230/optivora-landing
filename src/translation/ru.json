@@ -1,4 +1,9 @@
-{
+
+{  "projects.keyDeliverables": "Ключевые поставки",
+  "projects.description": "Описание",
+  "projects.partners": "Партнеры",
+  "projects.industries": "Отрасли",
+  "projects.categories": "Категории",
   "hero.title": "Современные решения водоснабжения",
   "hero.subtitle": "Инженерия, строительство и сервис под ключ",
   "services.title": "Наши услуги",

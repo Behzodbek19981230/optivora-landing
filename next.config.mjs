@@ -21,18 +21,18 @@ const nextConfig = {
       protocol: 'http',
       hostname: 'localhost',
       port: '4000',
-      pathname: '/uploads/**',
+      pathname: '/assets/**',
     },
     // Production API (allow both http and https for flexibility)
     {
       protocol: 'http',
-      hostname: 'api.bmsq.uz',
-      pathname: '/uploads/**',
+      hostname: '45.138.159.166',
+      pathname: '/assets/**',
     },
     {
       protocol: 'https',
-      hostname: 'api.bmsq.uz',
-      pathname: '/uploads/**',
+      hostname: '45.138.159.166',
+      pathname: '/assets/**',
     },
   ],
 },

@@ -1,3 +1,4 @@
+
 import axios, { AxiosHeaders } from 'axios';
 
 const baseApiUrl = process.env.NEXT_PUBLIC_API_URL
@@ -27,30 +28,22 @@ request.interceptors.response.use(
 	}
 );
 
-export const NewsService = async (page = 1, limit = 12) => {
-	const response = await request.get(`/news?page=${page}&limit=${limit}`);
-	return response.data;
-};
 
-export const getNewsById = async (id: string | number) => {
-	const response = await request.get(`/news/${id}`);
-	return response.data;
-};
 
-export const ProjectService = async (page = 1, limit = 12) => {
-    const response = await request.get(`/projects?page=${page}&limit=${limit}`);
+export const ProjectService = async () => {
+    const response = await request.get(`/project/public`);
+    return response.data;
+}
+export const ProjectDetailService = async (id: string) => {
+    const response = await request.get(`/project/${id}/public`);
+    return response.data;
+}
+export const ProjectImagesService = async (id: string) => {
+    const response = await request.get(`/project-image/public?project=${id}`);
     return response.data;
 }
 
-export const getProjectById = async (id: string | number) => {
-	const response = await request.get(`/projects/${id}`);
-	return response.data;
-};
 
-export const showProjectBySlug =async(slug:string)=>{
-    const response = await request.get(`/projects/show/${slug}`);
-	return response.data;
-}
 
 export const CompanyProfileService = async () => {
 	const response = await request.get('/company-profile/public');
