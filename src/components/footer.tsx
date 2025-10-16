@@ -7,6 +7,8 @@ import { useTranslations } from '@/config/i18n/t'
 import type { Locale } from '@/config/i18n/i18n'
 import { useAppSelector } from "@/store/hooks"
 import { AboutPageData } from "@/types/about"
+import { Service } from "@/types/service"
+import { Partner } from "@/types/partner"
 
 export function Footer() {
   const params = useParams()
@@ -14,7 +16,11 @@ export function Footer() {
   const { t } = useTranslations(lang)
   const {data} = useAppSelector(state => state.about)
  const about=data as AboutPageData
-  
+ const {data:serviceData} = useAppSelector(state => state.service)
+ const services=serviceData as Service[]
+ const {data:partnerData} = useAppSelector(state => state.partner)
+ const partners=partnerData as Partner[]
+
   return (
     <footer className="bg-card border-t border-border py-12">
       <div className="container mx-auto px-4">
@@ -43,83 +49,64 @@ export function Footer() {
           <div>
             <h4 className="font-semibold mb-4">{t('services')}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <Link href="/solutions#equipment" className="hover:text-primary transition-colors">
-                  Equipment Supply
-                </Link>
+                {services?.slice(0,5).map((service)=>(
+
+              <li key={service.id}>
+                  {service.name}
               </li>
-              <li>
-                <Link href="/solutions#technical" className="hover:text-primary transition-colors">
-                  Technical Coordination
-                </Link>
-              </li>
-              <li>
-                <Link href="/solutions#integration" className="hover:text-primary transition-colors">
-                  System Integration
-                </Link>
-              </li>
-              <li>
-                <Link href="/solutions#support" className="hover:text-primary transition-colors">
-                  Project Support
-                </Link>
-              </li>
+                ))}
+             
             </ul>
           </div>
 
-          <div>
-            <h4 className="font-semibold mb-4">{t('productsTitle')}</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <Link href="/solutions#power" className="hover:text-primary transition-colors">
-                  Power Generation
-                </Link>
-              </li>
-              <li>
-                <Link href="/solutions#water" className="hover:text-primary transition-colors">
-                  Water & Wastewater
-                </Link>
-              </li>
-              <li>
-                <Link href="/solutions#oil-gas" className="hover:text-primary transition-colors">
-                  Oil & Gas
-                </Link>
-              </li>
-              <li>
-                <Link href="/solutions#renewable" className="hover:text-primary transition-colors">
-                  Renewable Energy
-                </Link>
-              </li>
-            </ul>
-          </div>
-
+      
           <div>
             <h4 className="font-semibold mb-4">{t('about')}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href={`/${lang}/about` as any} className="hover:text-primary transition-colors">
+                <Link href={`#about`}  className="hover:text-primary transition-colors">
                   {t('about')}
                 </Link>
               </li>
               <li>
-                <Link href={`/${lang}/projects` as any} className="hover:text-primary transition-colors">
+                <Link href={`#projects`} className="hover:text-primary transition-colors">
                   {t('projectsHeading')}
                 </Link>
               </li>
               <li>
-                <Link href={`/${lang}/partners` as any} className="hover:text-primary transition-colors">
+                <Link href={`#partners`} className="hover:text-primary transition-colors">
                   {t('partners')}
                 </Link>
               </li>
               <li>
-                <Link href={`/${lang}/faq` as any} className="hover:text-primary transition-colors">
+                <Link href={`#faq`}  className="hover:text-primary transition-colors">
                   {t('navigation.faq')}
                 </Link>
               </li>
               <li>
-                <Link href={`/${lang}/contact` as any} className="hover:text-primary transition-colors">
+                <Link href={`#contact`} className="hover:text-primary transition-colors">
                   {t('contact')}
                 </Link>
               </li>
+            </ul>
+          </div>
+            <div>
+            <h4 className="font-semibold mb-4">{t('partners')}</h4>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+                {partners?.slice(0,5).map((partner)=>(
+
+              <li key={partner.id}>
+                <a
+                  href={partner.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-primary transition-colors"
+                >
+                  {partner.name}
+                </a>
+              </li>
+                ))}
+             
             </ul>
           </div>
         </div>

@@ -3,67 +3,71 @@
 
 import { Locale } from "@/config/i18n/i18n"
 import { getTranslation } from "@/config/i18n/t"
-import { PartnerService } from "@/lib/api"
 import { Partner } from "@/types/partner"
 import { useParams } from "next/navigation"
-import useSWR from "swr"
 import { OptimizedImage } from "@/components/OptimizedImage"
 import { useCallback, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from "react-redux"
+import { partnerActions, selectPartners, selectPartnerLoading } from "@/store/partnerSlice"
+import type { AppDispatch } from "@/store"
 import useEmblaCarousel from 'embla-carousel-react'
 import {ChevronLeft, ChevronRight} from "lucide-react";
 
 
 export function PartnersSection() {
-  const { lang } = useParams()
-  const { t } = getTranslation((lang as Locale) || 'uz')
-  const { data, isLoading } = useSWR('/api/partners', PartnerService)
+  const { lang } = useParams();
+  const { t } = getTranslation((lang as Locale) || 'uz');
+  const dispatch = useDispatch<AppDispatch>();
+  const partners = useSelector(selectPartners) as Partner[] || [];
+  const isLoading = useSelector(selectPartnerLoading);
 
-  // ensure hooks run in stable order
-  const partners = (data?.results || []) as Partner[]
+  useEffect(() => {
+    dispatch(partnerActions.fetchPartners());
+  }, [dispatch]);
 
   // Embla carousel: single-row slider with all partners as slides
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: 'start', containScroll: 'trimSnaps' })
-  const [canScrollPrev, setCanScrollPrev] = useState(false)
-  const [canScrollNext, setCanScrollNext] = useState(false)
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: 'start', containScroll: 'trimSnaps' });
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
 
-  const [paused, setPaused] = useState(false)
+  const [paused, setPaused] = useState(false);
   // update controls state when embla changes
   useEffect(() => {
-    if (!emblaApi) return
+    if (!emblaApi) return;
     const onSelect = () => {
-      setCanScrollPrev(emblaApi.canScrollPrev())
-      setCanScrollNext(emblaApi.canScrollNext())
-    }
-    emblaApi.on('select', onSelect)
-    onSelect()
+      setCanScrollPrev(emblaApi.canScrollPrev());
+      setCanScrollNext(emblaApi.canScrollNext());
+    };
+    emblaApi.on('select', onSelect);
+    onSelect();
     return () => {
-      emblaApi.off('select', onSelect)
-    }
-  }, [emblaApi])
+      emblaApi.off('select', onSelect);
+    };
+  }, [emblaApi]);
 
   // autoplay
   useEffect(() => {
-    if (!emblaApi) return
-    if (partners.length <= 1) return
+    if (!emblaApi) return;
+    if (partners.length <= 1) return;
     const id = setInterval(() => {
-      if (emblaApi.canScrollNext()) emblaApi.scrollNext()
-      if (emblaApi.canScrollNext() && !paused) emblaApi.scrollNext()
-    }, 4000)
-    return () => clearInterval(id)
-  }, [emblaApi, partners.length, paused])
-  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi])
-  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi])
+      if (emblaApi.canScrollNext()) emblaApi.scrollNext();
+      if (emblaApi.canScrollNext() && !paused) emblaApi.scrollNext();
+    }, 4000);
+    return () => clearInterval(id);
+  }, [emblaApi, partners.length, paused]);
+  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
 
   // early returns (after hooks)
-  if (isLoading) return <div className="py-12 text-center">{t('states.loading') || 'Loading...'}</div>
-  if (!partners.length) return <div className="py-12 text-center">{t('partners.noData') || 'No partners available'}</div>
+  if (isLoading) return <div className="py-12 text-center">{t('states.loading') || 'Loading...'}</div>;
+  if (!partners.length) return <div className="py-12 text-center">{t('partners.noData') || 'No partners available'}</div>;
 
   return (
     <section id="partners" className="py-24 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className={`text-center max-w-3xl mx-auto mb-16 transition-all duration-700 ${"opacity-100 translate-y-0"}`}>
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-balance">
-            {t('partners.title') || 'World-Class Equipment from Trusted Manufacturers'}
+            {t('partners') || 'World-Class Equipment from Trusted Manufacturers'}
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
             {t('partners.subtitle') || 'Authorized representation of leading global technology providers'}
