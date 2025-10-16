@@ -62,7 +62,7 @@ export function HeroSection() {
         {bannerSlides.map((slide, index) => (
           <div
             key={slide.id}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
+            className={`absolute inset-0  duration-1000 ${
               index === currentSlide ? "opacity-100" : "opacity-0"
             }`}
           >
@@ -73,7 +73,7 @@ export function HeroSection() {
               className="object-cover"
               priority={index === 0}
             />
-            <div className="absolute inset-0 bg-[image:var(--gradient-hero)] opacity-95" />
+            <div className="absolute inset-0 bg-[image:var(--gradient-hero)] opacity-90" />
           </div>
         ))}
       </div>
