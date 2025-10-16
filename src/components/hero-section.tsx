@@ -5,46 +5,52 @@ import { ArrowRight, Download, ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import Image from "next/image"
+import { request } from "@/lib/api"
+type Banner = {
+  description: string;
+    description_en: string;
+    description_ru: string;
+    description_uz: string;
+    id: number;
+    is_featured: boolean;
+    order_index: number;
+    photo: string;
+    title: string;
+    title_en: string;
+    title_ru: string;
+    title_uz: string;
+    updated_by: null | string;
+    updated_time: string;
+}
 
-const bannerSlides = [
-  {
-    id: 1,
-    image: "/power-plant-control-room.png",
-    title: "Powering Uzbekistan's Energy Infrastructure",
-    description:
-      "Trusted supplier of critical equipment and technical solutions for energy, water, and industrial facilities across Central Asia",
-    badge: "Leading Equipment Supplier",
-  },
-  {
-    id: 2,
-    image: "/industrial-pumps-facility.jpg",
-    title: "Industrial Pumps & Equipment Solutions",
-    description:
-      "Comprehensive range of pumps, compressors, and mechanical equipment for water treatment and industrial applications",
-    badge: "Industrial Solutions",
-  },
-  {
-    id: 3,
-    image: "/industrial-automation-control-panel.jpg",
-    title: "Advanced Automation & Control Systems",
-    description:
-      "State-of-the-art automation solutions and control systems for modern industrial facilities and power plants",
-    badge: "Smart Technology",
-  },
-]
+
 
 export function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isVisible, setIsVisible] = useState(false)
+  const [bannerSlides, setBannerSlides] = useState<Banner[]>([])
+  const fetchData = async () => {
+    const res=await request.get('/banner/public')
+    if(res?.data?.results?.length){
+        const banners:Banner[]=res.data.results
+        
+        setBannerSlides(banners)
+      setCurrentSlide(0)
+    }
+  }
+useEffect(() => {
+  setIsVisible(true)
+  fetchData()
+}, [])
 
-  useEffect(() => {
-    setIsVisible(true)
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % bannerSlides.length)
-    }, 5000)
+useEffect(() => {
+  if (!bannerSlides.length) return
+  const interval = setInterval(() => {
+    setCurrentSlide((prev) => (prev + 1) % bannerSlides.length)
+  }, 5000)
+  return () => clearInterval(interval)
+}, [bannerSlides])
 
-    return () => clearInterval(interval)
-  }, [])
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % bannerSlides.length)
@@ -54,12 +60,16 @@ export function HeroSection() {
     setCurrentSlide((prev) => (prev - 1 + bannerSlides.length) % bannerSlides.length)
   }
 
-  const currentBanner = bannerSlides[currentSlide]
+  const currentBanner = bannerSlides.find((slide) => slide.id === bannerSlides[currentSlide]?.id) || {
+    title: "Welcome to Our Company",
+    description: "Providing top-notch solutions for your business needs.",
+    photo: "/placeholder.svg",
+  }
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
-        {bannerSlides.map((slide, index) => (
+        {bannerSlides?.map((slide, index) => (
           <div
             key={slide.id}
             className={`absolute inset-0 transition-opacity duration-1000 ${
@@ -67,7 +77,7 @@ export function HeroSection() {
             }`}
           >
             <Image
-              src={slide.image || "/placeholder.svg"}
+              src={slide.photo || "/placeholder.svg"}
               alt={slide.title}
               fill
               className="object-cover"
@@ -91,9 +101,7 @@ export function HeroSection() {
           }`}
           key={currentSlide}
         >
-          <div className="inline-block px-4 py-2 bg-primary-foreground/20 backdrop-blur-sm text-primary-foreground rounded-full text-sm font-semibold mb-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            {currentBanner.badge}
-          </div>
+      
 
           <h1 className="text-5xl md:text-7xl font-bold text-primary-foreground leading-tight text-balance animate-in fade-in slide-in-from-bottom-4 duration-700">
             {currentBanner.title}

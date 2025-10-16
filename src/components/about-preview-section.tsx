@@ -43,7 +43,7 @@ export function AboutPreviewSection() {
   ]
 
   return (
-    <section id="about" className="py-24 bg-secondary/20">
+    <section id="about" className=" pb-24 bg-secondary/20">
       <AboutProfile />
 
       {/* Mission & Vision */}
