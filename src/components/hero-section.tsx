@@ -6,6 +6,8 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import { request } from "@/lib/api"
+import { useParams } from "next/navigation"
+import { useTranslations } from "@/config/i18n/t"
 type Banner = {
   description: string;
     description_en: string;
@@ -26,6 +28,8 @@ type Banner = {
 
 
 export function HeroSection() {
+    const {lang} = useParams()
+    const {t}=useTranslations(lang as any)
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isVisible, setIsVisible] = useState(false)
   const [bannerSlides, setBannerSlides] = useState<Banner[]>([])
@@ -112,25 +116,16 @@ useEffect(() => {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
-            <Link href="/solutions">
+            <Link href="#contact">
               <Button
                 size="lg"
                 className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 gap-2 group"
               >
-                Explore Our Solutions
+                 {t("contactFormTitle")}
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
-            <Link href="/contact">
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10 gap-2 bg-transparent"
-              >
-                <Download className="h-5 w-5" />
-                Request Catalog
-              </Button>
-            </Link>
+            
           </div>
         </div>
       </div>
