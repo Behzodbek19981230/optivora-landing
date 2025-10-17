@@ -1,16 +1,22 @@
 "use client"
 
+import { useTranslations } from "@/config/i18n/t"
+import { useAppSelector } from "@/store/hooks"
+import { useParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 
 export function StatsSection() {
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
+  const {data}=useAppSelector(state=>state.about)
+  const {lang}=useParams()
+  const {t}=useTranslations(lang as any)
 
   const stats = [
-    { value: 15, suffix: "+", label: "Years Experience" },
-    { value: 50, suffix: "+", label: "Equipment Categories" },
-    { value: 100, suffix: "+", label: "Projects Supported" },
-    { value: 20, suffix: "+", label: "International Partners" },
+    { value: data?.years_experience, suffix: "+", label: t("stats.yearsExperience") },
+    { value: data?.equipment_categories, suffix: "+", label: t("stats.equipmentCategories") },
+    { value: data?.projects_supported, suffix: "+", label: t("stats.projectsSupported") },
+    { value: data?.international_partners, suffix: "+", label: t("stats.internationalPartners") },
   ]
 
   useEffect(() => {
@@ -43,7 +49,7 @@ export function StatsSection() {
               }}
             >
               <div className="text-4xl md:text-5xl font-bold text-primary-foreground mb-2">
-                {isVisible ? <CountUp end={stat.value} suffix={stat.suffix} /> : "0"}
+                {isVisible ? <CountUp end={Number(stat.value)} suffix={stat.suffix} /> : "0"}
               </div>
               <div className="text-sm md:text-base text-primary-foreground/80">{stat.label}</div>
             </div>

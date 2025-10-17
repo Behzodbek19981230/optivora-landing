@@ -8,6 +8,8 @@ import Image from "next/image"
 import { request } from "@/lib/api"
 import { useParams } from "next/navigation"
 import { useTranslations } from "@/config/i18n/t"
+import { useAppSelector } from "@/store/hooks"
+import { AboutPageData } from "@/types/about"
 type Banner = {
   description: string;
     description_en: string;
@@ -33,6 +35,8 @@ export function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isVisible, setIsVisible] = useState(false)
   const [bannerSlides, setBannerSlides] = useState<Banner[]>([])
+  const {data}=useAppSelector(state=>state.about)
+  const about =data as AboutPageData || null
   const fetchData = async () => {
     const res=await request.get('/banner/public')
     if(res?.data?.results?.length){
@@ -116,13 +120,23 @@ useEffect(() => {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
-            <Link href="#contact">
+            <Link href="#solutions">
               <Button
                 size="lg"
                 className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 gap-2 group"
               >
-                 {t("contactFormTitle")}
+                 {t("solutions.title")}
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
+            <Link href={(about?.file || '#') as unknown as any} target={about?.file ? '_blank' : '_self'}>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10 gap-2 bg-transparent"
+              >
+                <Download className="h-5 w-5" />
+                {t('Download Capabilities Overview')}
               </Button>
             </Link>
             

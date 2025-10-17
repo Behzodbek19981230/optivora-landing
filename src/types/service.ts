@@ -15,5 +15,6 @@ export interface Service {
     order_index: number;
     created_by: number;
     updated_by: number | null;
+    equipment_categories_detail:{id:number; name:string}[]
   }
      

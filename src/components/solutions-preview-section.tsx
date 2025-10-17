@@ -67,7 +67,7 @@ export function SolutionsPreviewSection() {
   ]
 
   return (
-    <section ref={sectionRef} className="py-24 bg-background">
+    <section ref={sectionRef} className="py-24 bg-background" id="solutions">
       <div className="container mx-auto px-4">
         <div
           className={`text-center max-w-3xl mx-auto mb-16 transition-all duration-700 ${

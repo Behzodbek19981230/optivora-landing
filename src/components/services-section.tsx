@@ -37,10 +37,12 @@ export function ServicesSection() {
                     className={`text-center max-w-3xl mx-auto mb-16 transition-all duration-700 opacity-100 translate-y-0
                         }`}
                 >
-                    <h2 className="text-4xl md:text-5xl font-bold mb-4 text-balance">{t('services.title')}</h2>
-                    {/* <p className="text-lg text-muted-foreground leading-relaxed">
-            {t('services.slideSubtitle')}
-          </p> */}
+                    <h2 className="text-4xl md:text-5xl font-bold mb-4 text-balance">
+                        {t("services.title")}
+                    </h2>
+                    <p className="text-lg text-muted-foreground leading-relaxed">
+                        {t("services.subtitle")}
+                    </p>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8">
@@ -65,9 +67,9 @@ export function ServicesSection() {
                             </CardHeader>
                             <CardContent>
                                 <div className="flex flex-wrap gap-2">
-                                    {service.equipment_categories.map((category, idx) => (
+                                    {service.equipment_categories_detail.map((category, idx) => (
                                         <span key={idx} className="px-3 py-1 bg-secondary text-secondary-foreground text-xs rounded-full">
-                                            {category}
+                                            {category.name}
                                         </span>
                                     ))}
                                 </div>

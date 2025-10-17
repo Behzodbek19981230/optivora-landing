@@ -12,25 +12,25 @@ import { WhyChooseSection } from "@/components/why-choose-section"
 import { ContactSection } from "@/components/contact-section"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
+import { OurWorkSection } from "@/components/our-work-section"
 
 export default function Home() {
-  return (
-    <main className="min-h-screen">
-      <Header />
-      <HeroSection />
-      <AboutPreviewSection />
-      {/* <StatsSection /> */}
-     <IndustriesSection />
-
-      <ServicesSection />
-      {/* <SolutionsPreviewSection /> */}
-      <ProjectsSection />
-      <PartnersSection />
-      {/* <WhyChooseSection /> */}
-      {/* <TestimonialsSection /> */}
-      <FaqPreviewSection />
-      <ContactSection />
-      <Footer />
-    </main>
-  )
+    return (
+        <main className="min-h-screen">
+            <Header />
+            <HeroSection />
+            <AboutPreviewSection />
+            <StatsSection />
+            <OurWorkSection />
+            <ServicesSection />
+            <IndustriesSection />
+            <ProjectsSection />
+            <PartnersSection />
+            <WhyChooseSection />
+            {/* <TestimonialsSection /> */}
+            <FaqPreviewSection />
+            <ContactSection />
+            <Footer />
+        </main>
+    )
 }
