@@ -37,6 +37,9 @@ export function ServicesSection() {
                     className={`text-center max-w-3xl mx-auto mb-16 transition-all duration-700 opacity-100 translate-y-0
                         }`}
                 >
+                     <div className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-semibold mb-4">
+            {t('servicesTitle')}
+          </div>
                     <h2 className="text-4xl md:text-5xl font-bold mb-4 text-balance">
                         {t("services.title")}
                     </h2>

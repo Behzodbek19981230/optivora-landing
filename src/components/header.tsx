@@ -33,7 +33,7 @@ export function Header() {
         { key: "services", label: t('services') },
         { key: "industries", label: t('industry') },
         { key: "projects", label: t('projectsHeading') },
-        { key: "news", label: t('news.title') },
+        // { key: "news", label: t('news.title') },
         { key: "partners", label: t('partners') },
         { key: "faq", label: t('navigation.faq') },
         { key: "contact", label: t('contact') },

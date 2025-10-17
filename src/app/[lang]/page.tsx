@@ -26,7 +26,7 @@ export default function Home() {
             <ServicesSection />
             <IndustriesSection />
             <ProjectsSection />
-            <NewsSection />
+            {/* <NewsSection /> */}
             <PartnersSection />
             <WhyChooseSection />
             {/* <TestimonialsSection /> */}
