@@ -4,18 +4,26 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Locale } from "@/config/i18n/i18n"
 import { useTranslations } from "@/config/i18n/t"
-import { ServiceOursService } from "@/lib/api"
 import { Service } from "@/types/service"
 import { useParams } from "next/navigation"
-import useSWR from "swr"
 import { OptimizedImage } from "@/components/OptimizedImage"
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { serviceActions, selectServices, selectServiceLoading } from "@/store/serviceSlice"
+import type { AppDispatch } from "@/store"
 
 export function ServicesSection() {
-   const { lang } = useParams()
-    const { t } = useTranslations(lang as Locale)
-    const { data, isLoading } = useSWR('/api/services', ServiceOursService)
-  if (isLoading) return <div>{t('states.loading')}</div>
-  const services = (data?.results || []) as Service[]
+  const { lang } = useParams();
+  const { t } = useTranslations(lang as Locale);
+  const dispatch = useDispatch<AppDispatch>();
+  const services = useSelector(selectServices) as Service[] || [];
+  const isLoading = useSelector(selectServiceLoading);
+
+  useEffect(() => {
+    dispatch(serviceActions.fetchServices());
+  }, [dispatch]);
+
+  if (isLoading) return <div>{t('states.loading')}</div>;
 
 
 
@@ -45,15 +53,17 @@ export function ServicesSection() {
               style={{ transitionDelay: `${index * 150}ms` }}
             >
               <CardHeader>
-                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors aspect-square">
-                  <OptimizedImage
-                    src={service.icon}
-                    alt={service.name}
-                    className="w-full h-full object-cover rounded-xl"
-                    fallback="/placeholder.svg"
-                  />
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors aspect-square">
+                    <OptimizedImage
+                      src={service.icon}
+                      alt={service.name}
+                      className="w-full h-full object-cover rounded-xl"
+                      fallback="/placeholder.svg"
+                    />
+                  </div>
+                  <CardTitle className="text-2xl mb-2 m-0 p-0">{service.name}</CardTitle>
                 </div>
-                <CardTitle className="text-2xl mb-2">{service.name}</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-base leading-relaxed mb-4">{service.description}</CardDescription>

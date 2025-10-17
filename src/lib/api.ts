@@ -1,4 +1,5 @@
 
+
 import axios, { AxiosHeaders } from 'axios';
 
 const baseApiUrl = process.env.NEXT_PUBLIC_API_URL
@@ -28,7 +29,10 @@ request.interceptors.response.use(
 	}
 );
 
-
+export const IndustryService = async () => {
+	const response = await request.get('/industry/public');
+	return response.data;
+}
 
 export const ProjectService = async () => {
     const response = await request.get(`/project/public`);
