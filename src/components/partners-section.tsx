@@ -59,7 +59,7 @@ export function PartnersSection() {
               <div className="text-center space-y-2">
                 <h3 className="font-bold text-lg">{partner.name}</h3>
                 <p className="text-sm text-muted-foreground">{partner.country_detail?.name}</p>
-                <p className="text-xs text-primary font-medium">{partner.category}</p>
+                <p className="text-xs text-primary font-medium">{t(partner.category)}</p>
               </div>
             </div>
           ))}
