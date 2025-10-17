@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 import { useState, useEffect } from "react"
-import { useParams } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 import { useTranslations } from '@/config/i18n/t'
 import type { Locale } from '@/config/i18n/i18n'
 import Link from "next/link"
@@ -14,6 +14,7 @@ export function Header() {
     const [isScrolled, setIsScrolled] = useState(false)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
     const params = useParams()
+    const pathname = usePathname()
     const lang = (params?.lang || 'uz') as Locale
     const { t } = useTranslations(lang)
 
@@ -25,54 +26,58 @@ export function Header() {
         return () => window.removeEventListener("scroll", handleScroll)
     }, [])
 
+    // Section list
+    const sections = [
+        { key: "home", label: t('home') },
+        { key: "about", label: t('about') },
+        { key: "industries", label: t('industry') },
+        { key: "services", label: t('services') },
+        { key: "projects", label: t('projectsHeading') },
+        { key: "partners", label: t('partners') },
+        { key: "faq", label: t('navigation.faq') },
+        { key: "contact", label: t('contact') },
+    ]
+
+    // Helper to get correct href for each section
+    const getSectionHref = (section: string) => {
+        // Always include lang in homepage path
+        if (section === "home") return `/${lang}`
+        // If not on homepage, go to homepage with hash
+        if (pathname !== `/${lang}`) return `/${lang}#${section}`
+        // If already on homepage, just use hash
+        return `#${section}`
+    }
 
     return (
         <header
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-                    ? "bg-background/95 backdrop-blur-md border-b border-border shadow-md"
-                    : "bg-background/90 backdrop-blur-sm shadow-sm"
-                }`}
+                ? "bg-background/95 backdrop-blur-md border-b border-border shadow-md"
+                : "bg-background/90 backdrop-blur-sm shadow-sm"
+            }`}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-8">
-                        <Link href="/" className="flex items-center gap-2">
+                        <Link href={`/${lang}`} className="flex items-center gap-2">
                             <Image src="/logo.svg" alt="Optivora" width={120} height={40} className="h-10 w-auto " />
                         </Link>
                         <nav className="hidden lg:flex items-center gap-6">
-                            <Link href={`/${lang}`} className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-                                {t('home')}
-                            </Link>
-                            <Link href={`#about`} className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-                                {t('about')}
-                            </Link>
-                            <Link href="#industries" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-                                {t('industry')}
-                            </Link>
-                            <Link href="#services" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-                                {t('services')}
-                            </Link>
-                            
-                            <Link href="#projects" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-                                {t('projectsHeading')}
-                            </Link>
-                            <Link href="#partners" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-                                {t('partners')}
-                            </Link>
-                          
-                            <Link href="#faq" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-                                {t('navigation.faq')}
-                            </Link>
-                              <Link href="#contact" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-                                {t('contact')}
-                            </Link>
+                            {sections.map((section) => (
+                                <Link
+                                    key={section.key}
+                                    href={getSectionHref(section.key) as unknown as any}
+                                    className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+                                    scroll={true}
+                                >
+                                    {section.label}
+                                </Link>
+                            ))}
                         </nav>
                     </div>
                     <div className="flex items-center gap-4">
                         <div className="hidden md:block">
                             <LanguageSelector />
                         </div>
-
                         <Button
                             variant="ghost"
                             size="icon"
@@ -86,64 +91,17 @@ export function Header() {
 
                 {isMobileMenuOpen && (
                     <nav className="lg:hidden mt-4 pb-4 space-y-3 animate-in fade-in slide-in-from-top-2 duration-300">
-                        <Link
-                            href={`/${lang}`}
-                            className="block text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                            {t('home')}
-                        </Link>
-                        <Link
-                            href={`#about`}
-                            className="block text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                            {t('about')}
-                        </Link>
-                         <Link
-                            href="#industries"
-                            className="block text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                            {t('industry')}
-                        </Link>
-                        <Link
-                            href="#services"
-                            className="block text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                            {t('services')}
-                        </Link>
-                       
-                        <Link
-                            href="#projects"
-                            className="block text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                            {t('projectsHeading')}
-                        </Link>
-                        <Link
-                            href="#partners"
-                            className="block text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                            {t('partners')}
-                        </Link>
-                        
-                        <Link
-                            href="#faq"
-                            className="block text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                            {t('navigation.faq')}
-                        </Link>
-                        <Link
-                            href="#contact"
-                            className="block text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                            {t('contact')}
-                        </Link>
+                        {sections.map((section) => (
+                            <Link
+                                key={section.key}
+                                href={getSectionHref(section.key) as unknown as any}
+                                className="block text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
+                                scroll={true}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                                {section.label}
+                            </Link>
+                        ))}
                         <div className="pt-2 border-t border-border mt-2">
                             <LanguageSelector />
                         </div>
