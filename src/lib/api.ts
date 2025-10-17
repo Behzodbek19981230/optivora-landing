@@ -38,6 +38,16 @@ export const ProjectService = async () => {
     const response = await request.get(`/project/public`);
     return response.data;
 }
+export const NewsService= async () => {
+    const response = await request.get(`/news-post/public`);
+    return response.data;
+}
+
+export const NewsDetailService = async (id: string) => {
+    const response = await request.get(`/news-post/${id}/public`);
+    return response.data;
+}
+
 export const ProjectDetailService = async (id: string) => {
     const response = await request.get(`/project/${id}/public`);
     return response.data;

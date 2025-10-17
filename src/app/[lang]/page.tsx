@@ -13,6 +13,7 @@ import { ContactSection } from "@/components/contact-section"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { OurWorkSection } from "@/components/our-work-section"
+import { NewsSection } from "@/components/news-section"
 
 export default function Home() {
     return (
@@ -25,6 +26,7 @@ export default function Home() {
             <ServicesSection />
             <IndustriesSection />
             <ProjectsSection />
+            <NewsSection />
             <PartnersSection />
             <WhyChooseSection />
             {/* <TestimonialsSection /> */}

@@ -30,9 +30,10 @@ export function Header() {
     const sections = [
         { key: "home", label: t('home') },
         { key: "about", label: t('about') },
-        { key: "industries", label: t('industry') },
         { key: "services", label: t('services') },
+        { key: "industries", label: t('industry') },
         { key: "projects", label: t('projectsHeading') },
+        { key: "news", label: t('news.title') },
         { key: "partners", label: t('partners') },
         { key: "faq", label: t('navigation.faq') },
         { key: "contact", label: t('contact') },

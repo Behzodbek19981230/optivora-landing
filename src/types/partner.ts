@@ -12,4 +12,9 @@ export interface Partner {
 	updated_time: string;
 	created_by: number;
 	updated_by: number | null;
+    country_detail?: {
+        id: number;
+        name: string;
+        code: string;
+    }
 }
