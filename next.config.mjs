@@ -31,7 +31,7 @@ const nextConfig = {
     },
     {
       protocol: 'https',
-      hostname: '45.138.159.166',
+      hostname: 'api.optivora-group.com',
       pathname: '/assets/**',
     },
   ],
