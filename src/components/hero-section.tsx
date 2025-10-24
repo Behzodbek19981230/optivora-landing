@@ -80,10 +80,9 @@ export function HeroSection() {
                 {bannerSlides?.map((slide, index) => (
                     <div
                         key={slide.id}
-                        className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? "opacity-100" : "opacity-0"
-                            }`}
+                        className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? "opacity-100" : "opacity-0"}`}
                     >
-                        <img
+                        <Image
                             src={
                                 slide.photo
                                     ? slide.photo.startsWith("http://")
@@ -92,8 +91,9 @@ export function HeroSection() {
                                     : "/placeholder.svg"
                             }
                             alt={slide.title}
-                            
-                            className="object-cover h-full w-full"
+                            fill
+                            className="object-cover"
+                            priority={index === 0}
                         />
                         <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/80 to-primary/60" />
                     </div>
