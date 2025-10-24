@@ -25,9 +25,7 @@ build/
 .env.*
 !.env.example
 
-# Vercel
-.vercel/
-.vercel_build_output/
+
 
 # Editor directories and files
 .vscode/

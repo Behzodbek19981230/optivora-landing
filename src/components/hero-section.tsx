@@ -83,7 +83,7 @@ export function HeroSection() {
                         className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? "opacity-100" : "opacity-0"
                             }`}
                     >
-                        <Image
+                        <img
                             src={
                                 slide.photo
                                     ? slide.photo.startsWith("http://")
@@ -92,9 +92,8 @@ export function HeroSection() {
                                     : "/placeholder.svg"
                             }
                             alt={slide.title}
-                            fill
-                            className="object-cover"
-                            priority={index === 0}
+                            
+                            className="object-cover h-full w-full"
                         />
                         <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/80 to-primary/60" />
                     </div>

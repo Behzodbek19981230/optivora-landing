@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
-import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import ReduxProvider from '@/providers/ReduxProvider'
 
@@ -21,7 +20,6 @@ export default function RootLayout({
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         <ReduxProvider>
           {children}
-          <Analytics />
         </ReduxProvider>
       </body>
     </html>
