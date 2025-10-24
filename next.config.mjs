@@ -28,6 +28,12 @@ images: {
       hostname: '45.138.159.166',
       pathname: '/assets/**',
     },
+     {
+      protocol: 'https',
+      hostname: 'optivora-group.com',
+      pathname: '/assets/**',
+    },
+
     {
       protocol: 'http',
       hostname: 'api.optivora-group.com',
