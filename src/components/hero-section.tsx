@@ -82,6 +82,7 @@ export function HeroSection() {
                         key={slide.id}
                         className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? "opacity-100" : "opacity-0"}`}
                     >
+                        
                         <Image
                             src={
                                 slide.photo
