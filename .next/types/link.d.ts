@@ -36,11 +36,11 @@ declare namespace __next_route_internal_types__ {
     | `/${SafeSlug<T>}/faq`
     | `/${SafeSlug<T>}/about`
     | `/${SafeSlug<T>}/partners`
-    | `/${SafeSlug<T>}/projects`
-    | `/${SafeSlug<T>}/projects/${SafeSlug<T>}`
     | `/${SafeSlug<T>}/solutions`
     | `/${SafeSlug<T>}/news`
     | `/${SafeSlug<T>}/news/${SafeSlug<T>}`
+    | `/${SafeSlug<T>}/projects`
+    | `/${SafeSlug<T>}/projects/${SafeSlug<T>}`
 
   type RouteImpl<T> = 
     | StaticRoutes

@@ -14,19 +14,23 @@ const nextConfig = {
     ];
   },
 
- images: {
+images: {
   remotePatterns: [
-    // Local development backend
     {
       protocol: 'http',
       hostname: 'localhost',
       port: '4000',
       pathname: '/assets/**',
     },
-    // Production API (allow both http and https for flexibility)
+     
     {
       protocol: 'http',
       hostname: '45.138.159.166',
+      pathname: '/assets/**',
+    },
+    {
+      protocol: 'http',
+      hostname: 'api.optivora-group.com',
       pathname: '/assets/**',
     },
     {
