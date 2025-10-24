@@ -32,15 +32,15 @@ declare namespace __next_route_internal_types__ {
     | `/`
   type DynamicRoutes<T extends string = string> = 
     | `/${SafeSlug<T>}`
-    | `/${SafeSlug<T>}/about`
     | `/${SafeSlug<T>}/contact`
+    | `/${SafeSlug<T>}/about`
     | `/${SafeSlug<T>}/faq`
     | `/${SafeSlug<T>}/news`
     | `/${SafeSlug<T>}/news/${SafeSlug<T>}`
     | `/${SafeSlug<T>}/partners`
-    | `/${SafeSlug<T>}/solutions`
     | `/${SafeSlug<T>}/projects`
     | `/${SafeSlug<T>}/projects/${SafeSlug<T>}`
+    | `/${SafeSlug<T>}/solutions`
 
   type RouteImpl<T> = 
     | StaticRoutes

@@ -85,9 +85,7 @@ export function HeroSection() {
                         <Image
                             src={
                                 slide.photo
-                                    ? slide.photo.startsWith("http://")
-                                        ? slide.photo.replace("http://", "https://")
-                                        : slide.photo
+                                    ? slide.photo.replace(/^http:\/\//, "https://")
                                     : "/placeholder.svg"
                             }
                             alt={slide.title}
