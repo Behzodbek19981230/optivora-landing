@@ -22,7 +22,13 @@ const RelatedProjects = () => {
                     >
                         <div className="flex space-x-4">
                             <Image
-                                src={`${relatedProject.featured_image || '/placeholder.svg'}`}
+                                src={
+                                    relatedProject.featured_image
+                                        ? relatedProject.featured_image.startsWith("http://")
+                                            ? relatedProject.featured_image.replace("http://", "https://")
+                                            : relatedProject.featured_image
+                                        : "/placeholder.svg"
+                                }
                                 alt={relatedProject.title}
                                 className="w-16 h-16 object-cover rounded flex-shrink-0"
                                 width={64}

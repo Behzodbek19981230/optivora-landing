@@ -23,7 +23,13 @@ const RelatedNews = () => {
                     >
                         <div className="flex space-x-4">
                             <Image
-                                src={`${relatedNews.cover_image || '/placeholder.svg'}`}
+                                src={
+                                    relatedNews.cover_image
+                                        ? relatedNews.cover_image.startsWith("http://")
+                                            ? relatedNews.cover_image.replace("http://", "https://")
+                                            : relatedNews.cover_image
+                                        : "/placeholder.svg"
+                                }
                                 alt={relatedNews.title}
                                 className="w-16 h-16 object-cover rounded flex-shrink-0"
                                 width={64}
