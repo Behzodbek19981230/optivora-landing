@@ -28,7 +28,7 @@ images: {
     
     {
       protocol: 'https',
-      hostname: 'api.optivora-group.com',
+      hostname: 'api1.optivora-group.com',
       pathname: '/assets/**',
     },
   ],
