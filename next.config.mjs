@@ -26,11 +26,11 @@ images: {
     },
 
     
-    {
-      protocol: 'https',
-      hostname: 'api1.optivora-group.com',
-      pathname: '/assets/**',
-    },
+   {
+        protocol: 'https',
+        hostname: 'api1.optivora-group.com',
+        pathname: '/assets/**',
+      }
   ],
 },
 
