@@ -4,35 +4,24 @@ const nextConfig = {
   reactStrictMode: false,
   experimental: { typedRoutes: true },
 
-  async redirects() {
-    return [
+  output: 'export',
+
+  images: {
+    unoptimized: true,
+    remotePatterns: [
       {
-        source: '/',
-        destination: '/ru',
-        permanent: true,
-      }
-    ];
-  },
+        protocol: 'https',
+        hostname: 'optivora-group.com',
+        pathname: '/assets/**',
+      },
 
-images: {
-  remotePatterns: [
-  
-     
-   
-     {
-      protocol: 'https',
-      hostname: 'optivora-group.com',
-      pathname: '/assets/**',
-    },
-
-    
-   {
+      {
         protocol: 'https',
         hostname: 'api1.optivora-group.com',
         pathname: '/assets/**',
-      }
-  ],
-},
+      },
+    ],
+  },
 
 };
 
